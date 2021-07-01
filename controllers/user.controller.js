@@ -130,7 +130,9 @@ const updateUser = async (req, res) => {
   //     res.status(404).send("Not found!");
   //   }
 };
-
+const uploadAvatar = (req,res) => {
+  res.send("run upload ava")
+}
 module.exports = {
   getListUser,
   getUserDetail,
@@ -138,4 +140,5 @@ module.exports = {
   removeUser,
   updateUser,
   createUser,
+  uploadAvatar
 };

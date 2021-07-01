@@ -1,5 +1,6 @@
 const { User } = require("../models");
 const bcryptjs = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const signIn = async (req, res) => {
   const { email, password } = req.body;
   /**
@@ -13,7 +14,15 @@ const signIn = async (req, res) => {
       //so sanh password
       const isAuth = bcryptjs.compareSync(password, userLogin.password);
       if (isAuth) {
-        res.status(200).send("dang nhap thanh cong");
+        //tao token
+        const payload = {
+          id: userLogin.id,
+          email: userLogin.email,
+          role: userLogin.role,
+        };
+        const secretKey = "haoPN";
+        const token = jwt.sign(payload, secretKey,{expiresIn:60*60*60});
+        res.status(200).send({ message: "dang nhap thanh cong", token });
       } else {
         res.status(400).send("sai mat khau");
       }
