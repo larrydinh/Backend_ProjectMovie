@@ -130,8 +130,21 @@ const updateUser = async (req, res) => {
   //     res.status(404).send("Not found!");
   //   }
 };
-const uploadAvatar = (req,res) => {
-  res.send("run upload ava")
+const uploadAvatar = async (req,res) => {
+  const {file,user} = req;
+  const urlImage = "http://localhost:7000/" +file.path; 
+
+//luu link hinh xuong db
+  try {
+    const userDetail = await User.findByPk(user.id);
+    userDetail.avatar = urlImage;
+    //.save() để lưu xuống db
+    await userDetail.save();
+    res.send(userDetail);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+  // res.send(urlImage);
 }
 module.exports = {
   getListUser,
