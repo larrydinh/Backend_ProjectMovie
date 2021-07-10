@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({Cineplex}) {
       // define association here
-      this.belongsTo(Cineplex)
+      this.belongsTo(Cineplex, {foreignKey:"cineplexId"})
     }
   };
   Cinema.init({
